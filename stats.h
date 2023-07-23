@@ -1,3 +1,4 @@
+#pragma once
 #include <vector>
 
 namespace Statistics
@@ -16,33 +17,33 @@ class IAlerter
 {
 public:
     virtual void sendAlert() = 0;
-}
+};
 
-class EmailAlert::public IAlerter
+class EmailAlert : public IAlerter
 {
 public:
     bool emailSent = false;
 
 public:
     virtual void sendAlert() override;
-}
+};
 
-class LEDAlert::public IAlerter
+class LEDAlert : public IAlerter
 {
 public:
     bool ledGlows = false;
 
 public:
     virtual void sendAlert() override;
-}
+};
 
 class StatsAlerter
 {
 public:
     float maxThreshold;
-    std::vector<IAlerter> alerters;
+    std::vector<IAlerter *> alerters;
 
 public:
-    StatsAlerter(float maxThreshold, std::vector<IAlerter> alerters) : maxThreshold(maxThreshold), alerters(alerters) {}
-    void checkAndAlert(std::vector<float> &dataVector);
-}
+    StatsAlerter(float maxThreshold, std::vector<IAlerter *> &alerters) : maxThreshold(maxThreshold), alerters(alerters) {}
+    void checkAndAlert(std::vector<float> dataVector);
+};

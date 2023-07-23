@@ -14,7 +14,7 @@ Statistics::Stats Statistics::ComputeStatistics(const std::vector<float> &dataVe
     }
     else
     {
-        statsObj.average = std::accumulate(dataVector.begin(), dataVector.end(), 0.0) / array.size();
+        statsObj.average = std::accumulate(dataVector.begin(), dataVector.end(), 0.0) / dataVector.size();
         statsObj.max = *(std::max_element(dataVector.begin(), dataVector.end()));
         statsObj.min = *(std::min_element(dataVector.begin(), dataVector.end()));
     }
@@ -32,13 +32,13 @@ void LEDAlert::sendAlert()
     ledGlows = true;
 }
 
-void StatsAlerter::checkAndAlert(std::vector<float> &dataVector)
+void StatsAlerter::checkAndAlert(std::vector<float> dataVector)
 {
     for (float value : dataVector)
     {
         if (value > maxThreshold)
         {
-            for (auto alerter : alerters)
+            for (IAlerter *alerter : alerters)
             {
                 alerter->sendAlert();
             }
