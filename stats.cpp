@@ -1,7 +1,7 @@
 #include "stats.h"
 #include "numeric"
 #include "algorithm"
-#include <cmath>
+#include <limits>
 
 Statistics::Stats Statistics::ComputeStatistics(const std::vector<float> &dataVector)
 {
@@ -9,9 +9,9 @@ Statistics::Stats Statistics::ComputeStatistics(const std::vector<float> &dataVe
 
     if (dataVector.empty())
     {
-        statsObj.average = std::nanf();
-        statsObj.max = std::nanf();
-        statsObj.min = std::nanf();
+        statsObj.average = std::numeric_limits<double>::quiet_NaN();
+        statsObj.max = std::numeric_limits<double>::quiet_NaN();
+        statsObj.min = std::numeric_limits<double>::quiet_NaN();
     }
     else
     {
